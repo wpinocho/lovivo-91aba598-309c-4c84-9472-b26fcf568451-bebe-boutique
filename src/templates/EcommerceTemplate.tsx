@@ -64,16 +64,22 @@ export const EcommerceTemplate = ({
                 Inicio
               </Link>
               <Link 
+                to="/about" 
+                className="text-foreground/70 hover:text-baby-pink-500 transition-colors font-medium"
+              >
+                Sobre Nosotros
+              </Link>
+              <Link 
+                to="/shipping-calculator" 
+                className="text-foreground/70 hover:text-baby-pink-500 transition-colors font-medium"
+              >
+                Calculadora de Envíos
+              </Link>
+              <Link 
                 to="/blog" 
                 className="text-foreground/70 hover:text-baby-pink-500 transition-colors font-medium"
               >
                 Blog
-              </Link>
-              <Link 
-                to="/about" 
-                className="text-foreground/70 hover:text-baby-pink-500 transition-colors font-medium"
-              >
-                Nosotros
               </Link>
             </nav>
           </div>
@@ -142,16 +148,22 @@ export const EcommerceTemplate = ({
                 Inicio
               </Link>
               <Link 
+                to="/about" 
+                className="block text-white/80 hover:text-white transition-colors"
+              >
+                Sobre Nosotros
+              </Link>
+              <Link 
+                to="/shipping-calculator" 
+                className="block text-white/80 hover:text-white transition-colors"
+              >
+                Calculadora de Envíos
+              </Link>
+              <Link 
                 to="/blog" 
                 className="block text-white/80 hover:text-white transition-colors"
               >
                 Blog
-              </Link>
-              <Link 
-                to="/about" 
-                className="block text-white/80 hover:text-white transition-colors"
-              >
-                Nosotros
               </Link>
               <Link 
                 to="/contact" 

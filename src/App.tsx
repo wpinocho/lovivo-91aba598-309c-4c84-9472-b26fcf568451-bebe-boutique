@@ -1,49 +1,38 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import { trackPageView } from "@/lib/tracking-utils";
-import { CartProvider } from "@/contexts/CartContext";
-import { CartUIProvider } from "@/components/CartProvider";
-import { SettingsProvider } from "@/contexts/SettingsContext";
-import { PixelProvider } from "@/contexts/PixelContext";
-import { FaviconManager } from "@/components/FaviconManager";
-import Index from "./pages/Index";
-import Product from "./pages/Product";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import NotFound from "./pages/NotFound";
-import Checkout from "./pages/Checkout";
-import ThankYou from "./pages/ThankYou";
-import Cart from "./pages/Cart";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { CartProvider } from '@/contexts/CartContext'
+import { CartUIProvider } from '@/components/CartProvider'
+import { SettingsProvider } from '@/contexts/SettingsContext'
+import { Toaster } from '@/components/ui/toaster'
 
-const queryClient = new QueryClient();
+// Pages
+import Index from '@/pages/Index'
+import Product from '@/pages/Product'
+import Cart from '@/pages/Cart'
+import Checkout from '@/pages/Checkout'
+import ThankYou from '@/pages/ThankYou'
+import Blog from '@/pages/Blog'
+import BlogPost from '@/pages/BlogPost'
+import About from '@/pages/About'
+import ShippingCalculator from '@/pages/ShippingCalculator'
+import NotFound from '@/pages/NotFound'
 
-// Component to track page views on route changes
-function PageViewTracker() {
-  const location = useLocation();
-  
-  useEffect(() => {
-    trackPageView();
-  }, [location.pathname]);
-  
-  return null;
-}
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: 1,
+    },
+  },
+})
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <SettingsProvider>
-      <PixelProvider>
-        <FaviconManager />
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <SettingsProvider>
         <CartProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <CartUIProvider>
-              <PageViewTracker />
+          <CartUIProvider>
+            <Router>
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/products/:slug" element={<Product />} />
@@ -52,16 +41,17 @@ const App = () => (
                 <Route path="/thank-you/:orderId" element={<ThankYou />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="/about" element={<About />} />
+                <Route path="/shipping-calculator" element={<ShippingCalculator />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </CartUIProvider>
-          </BrowserRouter>
-        </TooltipProvider>
+            </Router>
+            <Toaster />
+          </CartUIProvider>
         </CartProvider>
-      </PixelProvider>
-    </SettingsProvider>
-  </QueryClientProvider>
-);
+      </SettingsProvider>
+    </QueryClientProvider>
+  )
+}
 
-export default App;
+export default App
